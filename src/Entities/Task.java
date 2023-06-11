@@ -1,8 +1,6 @@
 package Entities;
-
 import Utils.LeitorTask;
 import Utils.LeitorUser;
-
 import java.util.ArrayList;
 import java.util.Date;
 

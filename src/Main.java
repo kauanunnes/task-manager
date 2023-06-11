@@ -3,7 +3,6 @@ import Entities.Task;
 import Entities.User;
 import Panels.*;
 import Utils.LeitorTask;
-
 import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

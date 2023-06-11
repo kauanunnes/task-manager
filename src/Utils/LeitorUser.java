@@ -1,9 +1,7 @@
 package Utils;
-
 import Entities.Gender;
 import Entities.Task;
 import Entities.User;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

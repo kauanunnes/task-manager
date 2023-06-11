@@ -1,21 +1,21 @@
-package Utils;
-
+import Utils.LeitorArquivo;
 import Entities.Task;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class LeitorTask extends LeitorArquivo{
+public class LeitorTask extends LeitorArquivo {
     public LeitorTask(String filename) {
         super(filename);
     }
 
     @Override
-    public ArrayList read() {
+    public ArrayList<Task> read() {
         return null;
     }
 
@@ -32,10 +32,17 @@ public class LeitorTask extends LeitorArquivo{
                 }
                 String title = values[1];
                 String description = values[2];
-                boolean isFinished = Objects.equals(values[3], '1');
-                Date createdAt = new Date(values[4]);
+                boolean isFinished = Objects.equals(values[3], "1");
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Date createdAt = null;
+                try {
+                    createdAt = dateFormat.parse(values[4]);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 Task task = new Task(title, description, isFinished, createdAt);
-                System.out.println(isFinished);
                 tasks.add(task);
             }
         } catch (IOException e) {
