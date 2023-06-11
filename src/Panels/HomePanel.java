@@ -1,31 +1,51 @@
 package Panels;
-import Entities.*;
-import Entities.Window;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class HomePanel extends Window {
-    public ArrayList<User> users;
-    public HomePanel(String title, ArrayList<User> users) {
-        super(title, 20);
-        this.users = users;
+
+public class HomePanel extends JFrame {
+    public HomePanel() {
+        setTitle("Home");
+        setSize(500, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        setResizable(false);
+
+        JLabel label = new JLabel("Bem-vindo ao sistema!");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setBorder(new EmptyBorder(new Insets(30, 0, 0, 0)));
+        add(label, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+        JButton cadastroButton = new JButton("Cadastro");
+        cadastroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SignUpPanel();
+                dispose();
+            }
+        });
+        buttonPanel.add(cadastroButton);
+
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginPanel();
+                dispose();
+            }
+        });
+        buttonPanel.add(loginButton);
+
+        add(buttonPanel, BorderLayout.CENTER);
+
+        setVisible(true);
     }
-    public void mostrar() {
-        frame = new JFrame(this.getTitle()); // cria um frame
-        frame.add(this); // insere o território no frame
-        frame.setSize(400, 300 + this.getHeight() ); // define as dimensões do frame
-        frame.setVisible(true); // torna o frame visível
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // define como o frame é fechado
-    }
-    public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.black);
-        g2d.setFont(new Font("Arial", Font.BOLD, 16));
-        for(int i = 1; i < users.size(); i++) {
-            g2d.drawString(users.get(i).getName(), 10*i, 20*i);
-        }
-    }
+
 }

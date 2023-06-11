@@ -11,4 +11,6 @@ public class ErrorTreating extends Exception{
     public String getError() {
         return this.error + " - " + this.getMessage();
     }
+
+
 }

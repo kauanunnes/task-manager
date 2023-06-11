@@ -1,5 +1,9 @@
 package Entities;
 
+import Utils.LeitorTask;
+import Utils.LeitorUser;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Task {
@@ -8,11 +12,24 @@ public class Task {
     private Date createdAt;
     private boolean isFinished;
 
-    public Task(String title, String description, Date createdAt) {
+    public Task(String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.createdAt = new Date();
+        this.isFinished = false;
+    }
+
+    public Task(String title, String description, boolean isFinished, Date createdAt) {
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
-        this.isFinished = false;
+        this.isFinished = isFinished;
+    }
+
+    public static ArrayList<Task> getTasks(String username) {
+        String filePath = "data/tasks.csv";
+        LeitorTask leitor = new LeitorTask(filePath);
+        return leitor.read(username);
     }
 
     public String getTitle() {
