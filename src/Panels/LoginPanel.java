@@ -61,13 +61,11 @@ public class LoginPanel extends JFrame {
 
         add(panel);
 
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
 
-                login(username, password);
-            }
+            login(username, password);
         });
         pack();
         setVisible(true);
@@ -75,8 +73,9 @@ public class LoginPanel extends JFrame {
 
     public void login(String username, String password) {
         ArrayList<User> users = User.getUsers();
-        AtomicReference<User> currentUser = new AtomicReference<User>();
+        AtomicReference<User> currentUser = new AtomicReference<>();
         AtomicBoolean flag = new AtomicBoolean(false);
+
         users.forEach(user -> {
             if (Objects.equals(user.getName(), username)) {
                 if (user.checkPassword(password)) {
@@ -88,9 +87,9 @@ public class LoginPanel extends JFrame {
         if (flag.get()) {
             JOptionPane.showMessageDialog(LoginPanel.this, "Login efetuado com sucesso!");
             dispose();
-            new UserPanel(currentUser.get().getTasks());
+            new UserPanel(currentUser.get().getName());
         } else {
-            JOptionPane.showMessageDialog(LoginPanel.this, "Usuário ou senha inválidos.");
+            JOptionPane.showMessageDialog(LoginPanel.this, "Usuário e/ou senha inválidos.");
         }
     }
 }

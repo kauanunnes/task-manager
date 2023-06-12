@@ -1,5 +1,7 @@
 package Utils;
+
 import java.util.ArrayList;
+
 
 public abstract class LeitorArquivo<T> {
     protected final String filename;

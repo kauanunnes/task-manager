@@ -1,5 +1,8 @@
 package Panels;
 
+import Entities.Gender;
+import Entities.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +13,7 @@ public class SignUpPanel extends JFrame {
     private JPasswordField passwordField;
     private JRadioButton maleRadioButton;
     private JRadioButton femaleRadioButton;
-    private JTextField birthdayField;
+
     private JButton registerButton;
 
     public SignUpPanel() {
@@ -19,7 +22,7 @@ public class SignUpPanel extends JFrame {
         setResizable(false);
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(5, 1, 10, 10));
+        mainPanel.setLayout(new GridLayout(4, 1, 10, 10));
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BorderLayout());
@@ -61,36 +64,25 @@ public class SignUpPanel extends JFrame {
 
         mainPanel.add(panel3);
 
-        JPanel panel4 = new JPanel();
-        panel4.setLayout(new BorderLayout());
-        panel4.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adicionando padding interno
-
-        JLabel birthdayLabel = new JLabel("Birthday:");
-        birthdayField = new JTextField(20);
-        panel4.add(birthdayLabel, BorderLayout.WEST);
-        panel4.add(birthdayField, BorderLayout.CENTER);
-
-        mainPanel.add(panel4);
-
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel5.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adicionando padding interno
+        panel5.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         registerButton = new JButton("Register");
         panel5.add(registerButton);
 
         mainPanel.add(panel5);
 
-        registerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                String gender = maleRadioButton.isSelected() ? "Male" : "Female";
-                String birthday = birthdayField.getText();
+        registerButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            String gender = maleRadioButton.isSelected() ? "Male" : "Female";
 
-                // Lógica de registro do usuário
-                cadastrar(username, password, gender, birthday);
-            }
+            cadastrar(username, password, gender);
+
+            dispose();
+
+            new LoginPanel();
         });
 
         add(mainPanel);
@@ -99,11 +91,7 @@ public class SignUpPanel extends JFrame {
         setVisible(true);
     }
 
-    private void cadastrar(String username, String password, String gender, String birthday) {
-        // Lógica de registro do usuário (pode ser substituída por sua própria lógica)
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-        System.out.println("Gender: " + gender);
-        System.out.println("Birthday: " + birthday);
+    private void cadastrar(String username, String password, String gender) {
+        User.register(new User(username, password, new Gender(gender.charAt(0))));
     }
 }

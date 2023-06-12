@@ -1,7 +1,9 @@
 package Utils;
+
 import Entities.Gender;
 import Entities.Task;
 import Entities.User;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,34 +17,26 @@ public class LeitorUser extends LeitorArquivo {
         super(filename);
     }
     public ArrayList<User> read() {
-            ArrayList<User> users = new ArrayList<>();
-            try (BufferedReader br = new BufferedReader(new FileReader(this.filename))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    String[] values = line.split(",");
-                    String name = values[0];
-                    String password = values[1];
-                    char genderChar = values[2].charAt(0);
-                    Gender gender = new Gender(genderChar);
-                    ArrayList<Task> tasks = Task.getTasks(name);
+        ArrayList<User> users = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(this.filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                String name = values[0];
+                String password = values[1];
+                char genderChar = values[2].charAt(0);
+                Gender gender = new Gender(genderChar);
+                ArrayList<Task> tasks = Task.getTasks(name);
 
-                    Date birthday = null;
-                    try {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        birthday = dateFormat.parse(values[3]);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                User user = new User(name, password, gender, tasks);
 
-                    User user = new User(name, password, gender, birthday, tasks);
-
-                    users.add(user);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                users.add(user);
             }
-            return users;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return users;
+    }
 
     @Override
     public ArrayList read(String value) {
