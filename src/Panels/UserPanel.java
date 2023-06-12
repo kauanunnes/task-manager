@@ -1,17 +1,20 @@
 package Panels;
 
 import Entities.Task;
+import Entities.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class UserPanel extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
-    public UserPanel(ArrayList<Task> tasks) {
+    public UserPanel(String user) {
+        ArrayList<Task> tasks = Task.getTasks(user);
         setTitle("Lista de Tarefas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
@@ -52,6 +55,16 @@ public class UserPanel extends JFrame {
         }
 
         getContentPane().add(new JScrollPane(table));
+        JButton button = new JButton("Crie uma nova task");
+        button.addActionListener(e -> {
+            new CreateTaskPanel(user);
+            dispose();
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(button);
+        add(buttonPanel, BorderLayout.PAGE_END);
+        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         setVisible(true);
 
     }

@@ -1,10 +1,14 @@
 package Panels;
 
+import Entities.Task;
+import Entities.User;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CreateTaskPanel extends JFrame {
     private JTextField titleField;
@@ -12,9 +16,9 @@ public class CreateTaskPanel extends JFrame {
 
     private JButton createTaskButton;
 
-    public CreateTaskPanel() {
+    public CreateTaskPanel(String user) {
         setTitle("Adicionar nova tarefa");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         setResizable(false);
 
@@ -24,7 +28,7 @@ public class CreateTaskPanel extends JFrame {
         add(label, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(5, 1, 10, 10));
+        mainPanel.setLayout(new GridLayout(4, 2, 10, 10));
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BorderLayout());
@@ -57,12 +61,12 @@ public class CreateTaskPanel extends JFrame {
 
         mainPanel.add(panel5);
 
-        createTaskButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String title = titleField.getText();
-                String description = descriptionField.getText();
-                createNewTask(title, description);
-            }
+        createTaskButton.addActionListener(e -> {
+            String title = titleField.getText();
+            String description = descriptionField.getText();
+            Task task = createNewTask(title, description, user);
+            dispose();
+            new UserPanel(user);
         });
 
         add(mainPanel);
@@ -72,5 +76,9 @@ public class CreateTaskPanel extends JFrame {
 
     }
 
-    void createNewTask(String title, String description) {}
+    Task createNewTask(String title, String description, String user) {
+        Task task = new Task(title, description);
+        User.addTask(task, user);
+        return task;
+    }
 }

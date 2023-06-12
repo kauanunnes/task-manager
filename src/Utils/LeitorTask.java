@@ -5,6 +5,8 @@ import Entities.Task;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -28,18 +30,21 @@ public class LeitorTask extends LeitorArquivo{
                 String[] values = line.split(",");
                 String user = values[0];
                 if (!Objects.equals(user, username)) {
-                    break;
+                    continue;
                 }
                 String title = values[1];
                 String description = values[2];
-                boolean isFinished = Objects.equals(values[3], '1');
-                Date createdAt = new Date(values[4]);
+                String isFinished = values[3];
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date createdAt = sdf.parse(values[4]);
                 Task task = new Task(title, description, isFinished, createdAt);
                 System.out.println(isFinished);
                 tasks.add(task);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return tasks;
     }

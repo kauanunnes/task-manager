@@ -24,22 +24,16 @@ public class HomePanel extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
         JButton cadastroButton = new JButton("Cadastro");
-        cadastroButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new SignUpPanel();
-                dispose();
-            }
+        cadastroButton.addActionListener(e -> {
+            new SignUpPanel();
+            dispose();
         });
         buttonPanel.add(cadastroButton);
 
         JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new LoginPanel();
-                dispose();
-            }
+        loginButton.addActionListener(e -> {
+            new LoginPanel();
+            dispose();
         });
         buttonPanel.add(loginButton);
 
